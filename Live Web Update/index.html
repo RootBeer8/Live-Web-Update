@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Web Update Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+</head>
+<body>
+  <h2>Help the dog pick a color that best matches his <span class='hl'>eyes</span>.</h2>
+
+  <div class="controls">
+    <label for="blur">Put your glasses on first: </label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+    <label for="spacing">Box Size:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+
+    <label for="base"> Color</label>
+    <input id="base" type="color" name="base" value="#8FBA66">
+  </div>
+
+  <img src="dog.png">
+
+  <style>
+
+    /*
+      misc styles, nothing to do with CSS variables
+    */
+
+    body {
+      text-align: center;
+      background: #1C2513;
+      color: white; 
+      font-weight: 100;
+      font-size: 30px;
+      font-family: 'Noto Nastaliq Urdu', serif;
+      word-spacing: 13px;
+    }
+
+    .controls {
+      margin-bottom: 50px;
+    }
+
+    input {
+      width: 100px;
+    }
+
+    img{
+      width: 330px;
+    }
+
+    :root {
+      --base: #8FBA66;
+      --spacing: 10px;
+      --blur: 10px;
+    }
+
+    img {
+      padding: var(--spacing);
+      background: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl {
+      color: var(--base);
+    }
+
+  </style>
+    
+  <script>
+    const inputs = document.querySelectorAll('.controls input');
+
+    function handleUpdate(){
+      const suffix = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix)
+    }
+
+    inputs.forEach(input => input.addEventListener('change', handleUpdate,));
+    inputs.forEach(input => input.addEventListener('mousemove', handleUpdate,));
+  </script>
+
+</body>
+</html>
